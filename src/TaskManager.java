@@ -8,11 +8,37 @@ import java.util.List;
 public class TaskManager {
 
     private List<Task> lista = new ArrayList<>();
-    private final String FILE_JSON = "tasks.json";
+    private final String FILE_JSON = "file/tasks.json";
 
     public TaskManager() {
         loadTasks();
     }
+
+    public void add(String description) {
+        int biggerId = 0;
+        for (Task task : lista) {
+            if (task.id > biggerId) {
+                biggerId = task.id;
+            }
+        }
+        int newId = biggerId + 1;
+
+        Task newTask = new Task(newId, description);
+        lista.add(newTask);
+        saveTasks();
+        System.out.println("Tarefa adicionada com sucesso! ID: " + newTask.id);
+    }
+
+    public void listAll() {
+        if (lista.isEmpty()) {
+            System.out.println("Nenhuma tarefa encontrada.");
+            return;
+        }
+        for (Task task : lista) {
+            System.out.println(task);
+        }
+    }
+
 
     private void loadTasks() {
         File file = new File(FILE_JSON);
@@ -35,7 +61,14 @@ public class TaskManager {
     }
 
     private void saveTasks() {
-        try (FileWriter editor = new FileWriter(FILE_JSON)) {
+        File file = new File(FILE_JSON);
+
+        if (file.getParentFile() != null) {
+            file.getParentFile().mkdirs();
+        }
+
+
+        try (FileWriter editor = new FileWriter(file)) {
             editor.write("[\n");
             for (int i = 0; i < lista.size(); i++) {
                 editor.write(lista.get(i).toJson());

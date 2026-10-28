@@ -12,21 +12,28 @@ public class TaskApp {
             switch (comand) {
                 case "add":
                     if (args.length < 2) {
-                        System.out.println("Funcionou o add");
-                        break;
+                        System.out.println("Uso: add <descricao>");
+                        return;
                     }
+                    manager.add(args[1]);
+                    break;
                 case "update":
-                    if (args.length < 3) {
+                    if (args.length < 4) {
                         System.out.println("Funcionou o update");
                         break;
                     }
                 case "delete":
-                    if (args.length < 2) {
+                    if (args.length < 3) {
                         System.out.println("Funcionou o delete");
                         break;
                     }
+                case "list":
+                    manager.listAll();
+                    break;
+
             }
-        } catch (NumberFormatException e) {
+        } catch (
+                NumberFormatException e) {
             System.out.println("Erro: O ID informado deve ser um número válido.");
         }
 
