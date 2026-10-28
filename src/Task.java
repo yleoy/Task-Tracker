@@ -21,4 +21,24 @@ public class Task {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    public String toJson() {
+        return "  {\n" +
+                "    \"id\": " + id + ",\n" +
+                "    \"description\": \"" + description + "\",\n" +
+                "    \"status\": \"" + status.getValor() + "\",\n" +
+                "    \"createdAt\": \"" + createdAt + "\",\n" +
+                "    \"updatedAt\": \"" + updatedAt + "\"\n" +
+                "  }";
+    }
+
+    @Override
+    public String toString() {
+        return "--- Tarefa [ID: " + id + "] ---" +
+                "\n Data de Inicialização: " + createdAt +
+                "\n Descrição: " + description +
+                "\n Status: " + status +
+                "\n Última Atualização: " + updatedAt + "\n";
+    }
+
 }
