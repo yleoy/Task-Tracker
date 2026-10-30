@@ -18,12 +18,12 @@ public class TaskApp {
                     manager.add(args[1]);
                     break;
                 case "update":
-                    if (args.length < 4) {
+                    if (args.length < 3) {
                         System.out.println("Funcionou o update");
                         break;
                     }
                 case "delete":
-                    if (args.length < 3) {
+                    if (args.length < 2) {
                         System.out.println("Funcionou o delete");
                         break;
                     }

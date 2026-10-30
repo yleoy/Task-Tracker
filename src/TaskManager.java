@@ -17,7 +17,7 @@ public class TaskManager {
     public void add(String description) {
         int biggerId = 0;
         for (Task task : lista) {
-            if (task.id > biggerId) {
+            if (task.id < biggerId) {
                 biggerId = task.id;
             }
         }
@@ -48,11 +48,27 @@ public class TaskManager {
 
         try {
 
-            String content = Files.readString(file.toPath());
-            int start = 0;
-            while ((start = content.indexOf("{", start)) != -1) {
-                int end = content.indexOf("}", start);
-                if (end == -1) break;
+            String content = Files.readString(file.toPath()).trim();
+
+            if (content.length() <= 2) {
+                return;
+            }
+
+            String[] taskList = content.replace("[", "").replace("]", "").split("},");
+
+            for (String taskJson : taskList) {
+                taskJson = taskJson.trim();
+                if (taskJson.isEmpty()) {
+                    continue;
+                }
+
+                if (!taskJson.endsWith("}")) {
+                    taskJson = taskJson + "}";
+                }
+
+                lista.add(Task.fromJson(taskJson));
+
+
             }
 
         } catch (IOException e) {
@@ -66,7 +82,6 @@ public class TaskManager {
         if (file.getParentFile() != null) {
             file.getParentFile().mkdirs();
         }
-
 
         try (FileWriter editor = new FileWriter(file)) {
             editor.write("[\n");

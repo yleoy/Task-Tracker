@@ -1,4 +1,3 @@
-import java.time.LocalDateTime;
 
 public class Task {
 
@@ -12,7 +11,7 @@ public class Task {
         this.id = id;
         this.description = description;
         this.status = Status.TODO;
-            }
+    }
 
     public Task(int id, String description, Status status, String createdAt, String updatedAt) {
         this.id = id;
@@ -22,14 +21,28 @@ public class Task {
         this.updatedAt = updatedAt;
     }
 
+    public static Task fromJson(String json) {
+
+        json = json.replace("{", "").replace("}", "").replace("\"", "");
+
+        String[] fields = json.split(",");
+
+        int id = Integer.parseInt(fields[0].split(":")[1].trim());
+        String description = fields[1].split(":")[1].trim();
+        Status status = Status.fromString(fields[2].split(":")[1].trim());
+
+        String createdAt = fields[3].substring(fields[3].indexOf(":") + 1).trim();
+        String updateAt = fields[4].substring(fields[4].indexOf(":") + 1).trim();
+
+        return new Task(id, description, status, createdAt, updateAt);
+
+    }
+
     public String toJson() {
-        return "  {\n" +
-                "    \"id\": " + id + ",\n" +
-                "    \"description\": \"" + description + "\",\n" +
-                "    \"status\": \"" + status.getValor() + "\",\n" +
-                "    \"createdAt\": \"" + createdAt + "\",\n" +
-                "    \"updatedAt\": \"" + updatedAt + "\"\n" +
-                "  }";
+        return "{\"id\":\"" + id + "\", \"description\":\"" + description +
+                "\", \"status\":\"" + status.getValor() +
+                "\", \"createdAt\":\"" + createdAt +
+                "\", \"updatedAt\":\"" + updatedAt + "\"}";
     }
 
     @Override
