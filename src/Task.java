@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 
 public class Task {
 
@@ -11,6 +12,8 @@ public class Task {
         this.id = id;
         this.description = description;
         this.status = Status.TODO;
+        this.createdAt = LocalDateTime.now().toString();
+        this.updatedAt = this.createdAt;
     }
 
     public Task(int id, String description, Status status, String createdAt, String updatedAt) {

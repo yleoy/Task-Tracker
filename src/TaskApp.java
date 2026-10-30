@@ -17,16 +17,21 @@ public class TaskApp {
                     }
                     manager.add(args[1]);
                     break;
+
                 case "update":
                     if (args.length < 3) {
-                        System.out.println("Funcionou o update");
-                        break;
+                        System.out.println("Uso: update <id> <nova-descricao>");
+                        return;
                     }
+                    manager.update(Integer.parseInt(args[1]), args[2]);
+                    break;
+
                 case "delete":
                     if (args.length < 2) {
                         System.out.println("Funcionou o delete");
                         break;
                     }
+
                 case "list":
                     manager.listAll();
                     break;

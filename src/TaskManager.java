@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,31 +15,12 @@ public class TaskManager {
         loadTasks();
     }
 
-    public void add(String description) {
-        int biggerId = 0;
-        for (Task task : lista) {
-            if (task.id < biggerId) {
-                biggerId = task.id;
-            }
+    private Task searchForId(int id) {
+        for (Task t : lista) {
+            if (t.id == id) return t;
         }
-        int newId = biggerId + 1;
-
-        Task newTask = new Task(newId, description);
-        lista.add(newTask);
-        saveTasks();
-        System.out.println("Tarefa adicionada com sucesso! ID: " + newTask.id);
+        return null;
     }
-
-    public void listAll() {
-        if (lista.isEmpty()) {
-            System.out.println("Nenhuma tarefa encontrada.");
-            return;
-        }
-        for (Task task : lista) {
-            System.out.println(task);
-        }
-    }
-
 
     private void loadTasks() {
         File file = new File(FILE_JSON);
@@ -96,6 +78,67 @@ public class TaskManager {
             editor.write("]\n");
         } catch (IOException e) {
             System.out.println("Erro ao salvar tarefas: " + e.getMessage());
+        }
+    }
+
+    public void add(String description) {
+        int biggerId = 0;
+        for (Task task : lista) {
+            if (task.id > biggerId) {
+                biggerId = task.id;
+            }
+        }
+        int newId = biggerId + 1;
+
+        Task newTask = new Task(newId, description);
+        lista.add(newTask);
+        saveTasks();
+        System.out.println("Tarefa adicionada com sucesso! ID: " + newTask.id);
+    }
+
+    public void update(int id, String newDescription ) {
+        Task task = searchForId(id);
+        if (task != null) {
+            task.description = newDescription;
+            task.updatedAt = LocalDateTime.now().toString();
+            saveTasks();
+            System.out.println("Tarefa atualizada com sucesso! (ID: " + task.id + ")");
+        } else {
+            System.out.println("Erro ao atualizar Tarefa: ");
+        }
+    }
+
+    public void listAll() {
+        if (lista.isEmpty()) {
+            System.out.println("Nenhuma tarefa encontrada.");
+            return;
+        }
+        for (Task task : lista) {
+            System.out.println(task);
+        }
+    }
+
+    public void markInProgress(int id) {
+        Task task = searchForId(id);
+        if (task != null) {
+            task.status = Status.IN_PROGRES;
+            task.updatedAt = LocalDateTime.now().toString();
+            saveTasks();
+            System.out.println("Tarefa marcada como *Em progresso* (ID: " + task.id + ")");
+        } else {
+            System.out.println("Nenhuma tarefa encontrada.");
+        }
+    }
+
+    public void markDone(int id) {
+        Task task = searchForId(id);
+        if (task != null) {
+            task.status = Status.DONE;
+            task.updatedAt = LocalDateTime.now().toString();
+            saveTasks();
+            System.out.println("Tarefa marcado como Concluida (ID: " + task.id + ")");
+        } else  {
+            System.out.println("Nenhuma tarefa encontrada.");
         }
     }
 
