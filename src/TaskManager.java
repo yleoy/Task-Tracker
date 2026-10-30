@@ -108,6 +108,17 @@ public class TaskManager {
         }
     }
 
+    public void delete(int id) {
+        Task task = searchForId(id);
+        if (task != null) {
+            lista.remove(task);
+            saveTasks();
+            System.out.println("Tarefa removida com sucesso!  (ID: " + task.id + ")");
+        } else  {
+            System.out.println("Erro ao remover Tarefa: ");
+        }
+    }
+
     public void listAll() {
         if (lista.isEmpty()) {
             System.out.println("Nenhuma tarefa encontrada.");

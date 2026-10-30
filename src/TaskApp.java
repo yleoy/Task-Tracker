@@ -28,12 +28,29 @@ public class TaskApp {
 
                 case "delete":
                     if (args.length < 2) {
-                        System.out.println("Funcionou o delete");
-                        break;
+                        System.out.println("Uso: delete <id>");
+                        return;
                     }
+                    manager.delete(Integer.parseInt(args[1]));
+                    break;
 
                 case "list":
                     manager.listAll();
+                    break;
+
+                case "mark-in-progress":
+                    if (args.length < 2) {
+                        System.out.println("Uso: mark-in-progress <id>");
+                        return;
+                    }
+                    manager.markInProgress(Integer.parseInt(args[1]));
+                    break;
+                case "mark-done":
+                    if (args.length < 2) {
+                        System.out.println("Uso: mark-done <id>");
+                        return;
+                    }
+                    manager.markDone(Integer.parseInt(args[1]));
                     break;
 
             }
