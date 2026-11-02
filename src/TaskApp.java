@@ -1,7 +1,7 @@
 public class TaskApp {
     public static void main(String[] args) {
         if (args.length == 0) {
-            TaskManager.ViewHelp();
+            TaskManager.viewHelp();
             return;
         }
 
@@ -35,7 +35,11 @@ public class TaskApp {
                     break;
 
                 case "list":
-                    manager.listAll();
+                    if (args.length < 1) {
+                        manager.listByStatus(args[1]);
+                    } else {
+                        manager.listAll();
+                    }
                     break;
 
                 case "mark-in-progress":
@@ -52,6 +56,10 @@ public class TaskApp {
                     }
                     manager.markDone(Integer.parseInt(args[1]));
                     break;
+
+                default:
+                    System.out.println("Comando invalido: " + comand);
+                    manager.viewHelp();
 
             }
         } catch (

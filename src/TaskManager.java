@@ -96,7 +96,7 @@ public class TaskManager {
         System.out.println("Tarefa adicionada com sucesso! ID: " + newTask.id);
     }
 
-    public void update(int id, String newDescription ) {
+    public void update(int id, String newDescription) {
         Task task = searchForId(id);
         if (task != null) {
             task.description = newDescription;
@@ -114,7 +114,7 @@ public class TaskManager {
             lista.remove(task);
             saveTasks();
             System.out.println("Tarefa removida com sucesso!  (ID: " + task.id + ")");
-        } else  {
+        } else {
             System.out.println("Erro ao remover Tarefa: ");
         }
     }
@@ -127,6 +127,26 @@ public class TaskManager {
         for (Task task : lista) {
             System.out.println(task);
         }
+    }
+
+    public void listByStatus(String statusText) {
+        Status statusFilter = Status.fromString(statusText);
+        if (statusFilter == null) {
+            System.out.println("Status inválido! Opções: todo, in-progress, done");
+            return;
+        }
+
+        boolean encontrou = false;
+        for (Task task : lista) {
+            if (task.status == statusFilter) {
+                System.out.println(task);
+                encontrou = true;
+            }
+        }
+        if (!encontrou) {
+            System.out.println("Nenhuma tarefa encontrada com este status");
+        }
+
     }
 
     public void markInProgress(int id) {
@@ -147,14 +167,14 @@ public class TaskManager {
             task.status = Status.DONE;
             task.updatedAt = LocalDateTime.now().toString();
             saveTasks();
-            System.out.println("Tarefa marcado como Concluida (ID: " + task.id + ")");
-        } else  {
+            System.out.println("Tarefa marcado como *Concluida* (ID: " + task.id + ")");
+        } else {
             System.out.println("Nenhuma tarefa encontrada.");
         }
     }
 
 
-    public static void ViewHelp() {
+    public static void viewHelp() {
         System.out.println("\n--- Task Tracker CLI ---");
         System.out.println("Comandos disponíveis:");
         System.out.println("  add <descricao>                  - Adiciona uma nova tarefa");

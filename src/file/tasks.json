@@ -1,4 +1,5 @@
 [
 {"id":"2", "description":"Id incremetando ou nem?", "status":"todo", "createdAt":"2026-10-30T03:34:43.444235300", "updatedAt":"2026-10-30T03:34:43.444235300"},
-{"id":"3", "description":"Id incremetando finalmente porra", "status":"done", "createdAt":"2026-10-30T03:34:56.771071900", "updatedAt":"2026-10-30T03:51:30.296188500"}]
+{"id":"3", "description":"Id incremetando finalmente porra", "status":"done", "createdAt":"2026-10-30T03:34:56.771071900", "updatedAt":"2026-10-30T03:51:30.296188500"},
+{"id":"4", "description":"Finalizar", "status":"todo", "createdAt":"2026-10-30T03:55:21.991007200", "updatedAt":"2026-10-30T03:55:21.991007200"}]
 ]
